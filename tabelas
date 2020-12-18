@@ -1,0 +1,19 @@
+create database Bicicletaria;
+use Bicicletaria;
+
+create table Cliente (
+id_cli integer primary key not null auto_increment,
+nome_cli varchar(200) not null,
+telefone_cli varchar(30)not null,
+endereco_cli varchar(300),
+cpf_cnpj_cli varchar(30),
+bicicleta_cli varchar(100)
+);
+
+create table Funcionario (
+id_fun integer primary key not null auto_increment,
+nome_fun varchar(200) not null,
+funcao_fun varchar(100),
+endereco_fun varchar(300),
+telefone_fun varchar(500)
+);
