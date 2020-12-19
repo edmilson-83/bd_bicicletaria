@@ -17,3 +17,119 @@ funcao_fun varchar(100),
 endereco_fun varchar(300),
 telefone_fun varchar(500)
 );
+
+create table Agenda (
+id_age integer primary key not null auto_increment,
+data_inicio_age date,
+data_termino_age date
+);
+
+create table Fornecedor (
+id_for integer primary key not null auto_increment,
+nome_for varchar(200) not null,
+cnpj_for varchar(50),
+endereco_for varchar(500),
+telefone_for varchar(20) not null
+);
+
+create table Despesas (
+id_des integer primary key not null auto_increment,
+valor_des float,
+nome_des varchar(100),
+data_des date
+);
+
+create table Compra (
+id_com integer primary key not null auto_increment,
+nome_com varchar(100),
+quantidade_com integer,
+valor_com float,
+id_des_fk integer not null,
+foreign key (id_des_fk) references Despesas (id_des)
+);
+
+create table Compra_Fornecedor (
+id_comfor integer primary key not null auto_increment,
+id_for_fk integer,
+foreign key (id_for_fk) references Fornecedor (id_for),
+id_com_fk integer,
+foreign key (id_com_fk) references Compra (id_com)
+);
+
+create table Produto (
+id_pro integer primary key not null auto_increment,
+nome_pro varchar(100),
+valor_pro float,
+quantidade_pro int,
+id_com_fk int,
+foreign key(id_com_fk)references Compra (id_com)
+);
+
+create table Produto_Fornecedor (
+id_profor integer primary key not null auto_increment,
+id_pro_fk int,
+foreign key(id_pro_fk)references Produto (id_pro),
+id_for_fk int,
+foreign key (id_for_fk) references Fornecedor (id_for)
+);
+
+create table Venda (
+id_ven integer primary key not null auto_increment,
+valor_ven float,
+data_ven date,
+id_cli_fk int,
+foreign key (id_cli_fk) references Cliente (id_cli),
+id_fun_fk int,
+foreign key (id_fun_fk) references Funcionario (id_fun)
+);
+
+create table Venda_Produto (
+id_venpro integer primary key not null auto_increment,
+id_ven_fk int,
+foreign key (id_ven_fk) references Venda (id_ven),
+id_pro_fk int,
+foreign key (id_pro_fk) references Produto (id_pro)
+);
+
+create table Ordem_Servico (
+id_or integer primary key not null auto_increment,
+nome_or varchar(100),
+descricao_or varchar(300),
+situacao varchar(30),
+id_ven_fk int,
+foreign key (id_ven_fk) references Venda (id_ven),
+id_age_fk int,
+foreign key (id_age_fk) references Agenda (id_age)
+);
+
+create table Recebimento (
+id_rec integer primary key not null auto_increment,
+saldo_inicial_rec float,
+valor_entrada_rec float,
+data_rec date,
+tipo_pagamento_rec varchar(100),
+saldo_final_rec float
+);
+
+create table Fluxo_Caixa (
+id_flc integer primary key not null auto_increment,
+contas_rec_flc float,
+contas_pagar_flc float,
+media_atual_flc float
+);
+
+create table Recebimento_Flcaixa (
+id_recfl integer primary key not null auto_increment,
+id_rec_fk int,
+foreign key (id_rec_fk) references Recebimento (id_rec),
+id_flc_fk int,
+foreign key (id_flc_fk) references Fluxo_Caixa (id_flc)
+);
+
+create table Fluxocx_Despesas (
+id_flds integer primary key not null auto_increment,
+id_des_fk int,
+foreign key (id_des_fk) references Despesas (id_des),
+id_flc_fk int,
+foreign key (id_flc_fk) references Fluxo_Caixa (id_flc)
+);
